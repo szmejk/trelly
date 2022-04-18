@@ -1,12 +1,11 @@
-//todo remove
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getAllCards } from '../api/cards'
 
-import { getAllLists } from '../api/lists'
-import { cardResponseValidator } from '../schema/cards'
-import { listsReponseValidator } from '../schema/lists'
+import { getBoardCardsThunk } from '../store/cards'
+import { getBoardListsThunk } from '../store/lists'
+import { RootState, useAppDispatch } from '../store/store'
+import { ListContainer } from './ListContainer'
 
 const FlexColumn = styled.div`
     display: flex;
@@ -21,44 +20,26 @@ const FlexRow = styled.div`
     align-items: center;
 `
 
-const ImgWrapped = styled.img`
-    width: 300px;
-`
-
 export const Board = () => {
-    const [lists, setLists] = useState([])
-    const [cards, setCards] = useState([])
-    useEffect(() => {
-        const fetchLists = async () => {
-            try {
-                const lists = await getAllLists()
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                listsReponseValidator.parse(lists)
-                setLists(lists as any)
-                const cards = await getAllCards()
-                cardResponseValidator.parse(cards)
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                setCards(cards as any)
-            } catch (e) {}
-        }
+    const dispatch = useAppDispatch()
+    const { lists, error, isLoading } = useSelector((state: RootState) => state.listsReducer)
 
-        fetchLists()
-    }, [])
+    useEffect(() => {
+        dispatch(getBoardListsThunk())
+        dispatch(getBoardCardsThunk())
+    }, [dispatch])
+
     return (
         <div>
             Board
             <FlexColumn>
                 <FlexRow>
-                    <div>{lists.map((list: any) => list.name)}</div>
-                </FlexRow>
-                <FlexColumn>
-                    {cards.map((card: any) => (
-                        <FlexRow key={card.id}>
-                            <p>{card.name}</p> <p>{card.labels.map((label: any) => label.color)}</p>
-                            {card.attachments.length > 0 && <ImgWrapped src={card.cover.scaled[3].url} />}
-                        </FlexRow>
+                    {isLoading && <p>Loading</p>}
+                    {error && <p>Error</p>}
+                    {Object.values(lists).map(list => (
+                        <ListContainer key={list.id} list={list} />
                     ))}
-                </FlexColumn>
+                </FlexRow>
             </FlexColumn>
         </div>
     )

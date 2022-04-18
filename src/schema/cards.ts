@@ -37,6 +37,6 @@ export const cardValidator = z.object({
 
 export type Card = z.infer<typeof cardValidator>
 
-export const cardResponseValidator = z.array(cardValidator)
+export const cardsResponseValidator = z.array(cardValidator)
 
-export type CardResponse = z.infer<typeof cardResponseValidator>
+export type CardsResponse = z.infer<typeof cardsResponseValidator>
