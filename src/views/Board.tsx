@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { getAllCards } from '../api/cards'
 
 import { getAllLists } from '../api/lists'
+import { cardResponseValidator } from '../schema/cards'
+import { listsReponseValidator } from '../schema/lists'
 
 const FlexColumn = styled.div`
     display: flex;
@@ -31,8 +33,10 @@ export const Board = () => {
             try {
                 const lists = await getAllLists()
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                listsReponseValidator.parse(lists)
                 setLists(lists as any)
                 const cards = await getAllCards()
+                cardResponseValidator.parse(cards)
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setCards(cards as any)
             } catch (e) {}
