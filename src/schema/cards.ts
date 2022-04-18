@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const cardLabelValidator = z.object({
     id: z.string(),
-    name: z.string(),
+    color: z.string(),
 })
 
 export type CardLabel = z.infer<typeof cardLabelValidator>
@@ -24,7 +24,7 @@ export const cardAttachmentValidator = z.object({
     url: z.string(),
 })
 
-export type CardAttachmentCover = z.infer<typeof cardAttachmentValidator>
+export type CardAttachment = z.infer<typeof cardAttachmentValidator>
 
 export const cardValidator = z.object({
     id: z.string(),
