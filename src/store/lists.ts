@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getAllLists } from '../api/lists'
-import { List, ListsResponse } from '../schema/lists'
+import { ListSchema, ListsResponse } from '../schema/lists'
 import { resetCommonState, setErrorState, setLoadingState } from './utils'
 
 type ListsState = {
-    lists: StringMap<List>
+    lists: StringMap<ListSchema>
 } & CommonReduxState
 
 const initialState: ListsState = {
@@ -34,7 +34,7 @@ export const listsSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getBoardListsThunk.fulfilled, (state, { payload }) => {
             resetCommonState(state)
-            state.lists = payload.reduce<StringMap<List>>((acc, list) => {
+            state.lists = payload.reduce<StringMap<ListSchema>>((acc, list) => {
                 acc[list.id] = list
                 return acc
             }, {})

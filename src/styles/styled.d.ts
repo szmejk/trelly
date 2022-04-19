@@ -2,7 +2,7 @@ import 'styled-components'
 import { breakpoints } from './breakpoints'
 import { spacing } from './spacing'
 import { fontSize } from './typography'
-import { colors } from './typography'
+import { colors } from './colors'
 
 declare module 'styled-components' {
     interface DefaultTheme {

@@ -1,4 +1,4 @@
-import { Card, CardAttachment, CardCover } from '../schema/cards'
+import { CardSchema, CardAttachment, CardCover } from '../schema/cards'
 import { getCoverImageData } from './cards'
 
 describe('getCoverImageData', () => {
@@ -6,7 +6,7 @@ describe('getCoverImageData', () => {
     const attachment: CardAttachment = { id: '1', name: 'test', url: 'url' }
 
     it('should find cover image in attachments', () => {
-        const cardWithAttachment: Card = {
+        const cardWithAttachment: CardSchema = {
             id: '',
             idList: '',
             name: '',
@@ -20,7 +20,7 @@ describe('getCoverImageData', () => {
 
     it('should return null if cover has no image', () => {
         const coverWithoutId: CardCover = { idAttachment: null }
-        const cardWithEmptyCover: Card = {
+        const cardWithEmptyCover: CardSchema = {
             id: '',
             idList: '',
             name: '',
@@ -32,7 +32,7 @@ describe('getCoverImageData', () => {
     })
 
     it('should return null if no attachment was found', () => {
-        const cardWithoutAttachment: Card = {
+        const cardWithoutAttachment: CardSchema = {
             id: '',
             idList: '',
             name: '',

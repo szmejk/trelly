@@ -5,7 +5,7 @@ export const listValidator = z.object({
     name: z.string(),
 })
 
-export type List = z.infer<typeof listValidator>
+export type ListSchema = z.infer<typeof listValidator>
 
 export const listsReponseValidator = z.array(listValidator)
 
