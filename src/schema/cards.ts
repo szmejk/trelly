@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ListId } from './lists'
 
 export const cardLabelColorsValidator = z.union([
     z.literal('green'),
@@ -11,35 +12,41 @@ export const cardLabelColorsValidator = z.union([
 
 export type CardLabelColors = z.infer<typeof cardLabelColorsValidator>
 
+export type CardLabelId = Flavor<string, 'cardLabelId'>
+
 export const cardLabelValidator = z.object({
-    id: z.string(),
+    id: z.string().transform(id => id as CardLabelId),
     color: cardLabelColorsValidator,
 })
 
 export type CardLabel = z.infer<typeof cardLabelValidator>
+
+export type CardAttachmentId = Flavor<string, 'cardAttachmentId'>
 
 export const cardCoverValidator = z.union([
     z.object({
         idAttachment: z.null(),
     }),
     z.object({
-        idAttachment: z.string(),
+        idAttachment: z.string().transform(id => id as CardAttachmentId),
     }),
 ])
 
 export type CardCover = z.infer<typeof cardCoverValidator>
 
 export const cardAttachmentValidator = z.object({
-    id: z.string(),
+    id: z.string().transform(id => id as CardAttachmentId),
     name: z.string(),
     url: z.string(),
 })
 
 export type CardAttachment = z.infer<typeof cardAttachmentValidator>
 
+export type CardId = Flavor<string, 'cardId'>
+
 export const cardValidator = z.object({
-    id: z.string(),
-    idList: z.string(),
+    id: z.string().transform(id => id as CardId),
+    idList: z.string().transform(id => id as ListId),
     name: z.string(),
     labels: z.array(cardLabelValidator),
     cover: cardCoverValidator,

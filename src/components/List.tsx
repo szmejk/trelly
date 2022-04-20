@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 type ListProps = {
     name: string
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 const Wrapper = styled.article`
@@ -20,11 +20,11 @@ const Wrapper = styled.article`
 `
 
 const Title = styled.h2`
-    font-size: ${({ theme: { fontSize } }) => fontSize.s14};
     padding: ${({ theme: { spacing } }) =>
         css`
             ${spacing.s8} ${spacing.s6}
         `};
+    font-size: ${({ theme: { fontSize } }) => fontSize.s14};
 `
 
 const ChildrenContainer = styled.ul`

@@ -7,21 +7,26 @@ type ListsState = {
     lists: StringMap<ListSchema>
 } & CommonReduxState
 
-const initialState: ListsState = {
+export const LISTS_ERROR = "Error occured while fetching board's lists. Try again later!"
+
+export const initialState: ListsState = {
     isLoading: false,
     error: false,
     errorMessage: '',
     lists: {},
 }
 
-export const getBoardListsThunk = createAsyncThunk<ListsResponse>('lists/get', async (_, { rejectWithValue }) => {
-    try {
-        const response = await getAllLists()
-        return response
-    } catch (e: unknown) {
-        return rejectWithValue('error')
+export const getBoardListsThunk = createAsyncThunk<ListsResponse, void, { rejectValue: string }>(
+    'lists/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await getAllLists()
+            return response
+        } catch (e: unknown) {
+            return rejectWithValue(LISTS_ERROR)
+        }
     }
-})
+)
 
 export const listsSlice = createSlice({
     name: 'lists',
@@ -42,8 +47,8 @@ export const listsSlice = createSlice({
         builder.addCase(getBoardListsThunk.pending, state => {
             setLoadingState(state)
         })
-        builder.addCase(getBoardListsThunk.rejected, state => {
-            setErrorState(state)
+        builder.addCase(getBoardListsThunk.rejected, (state, { payload }) => {
+            setErrorState(state, payload)
         })
     },
 })

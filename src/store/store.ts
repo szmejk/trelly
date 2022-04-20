@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux'
 import { cardsReducer } from './cards'
 import { listsReducer } from './lists'
 
-export const store = configureStore({ reducer: { listsReducer, cardsReducer } })
+export const reducer = { listsReducer, cardsReducer }
+
+export const store = configureStore({ reducer })
 
 export type ReduxStore = typeof store
 export type RootState = ReturnType<typeof store.getState>

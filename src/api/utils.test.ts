@@ -1,4 +1,4 @@
-import { getApiUrl, apiUrlBase, apiUrlAuthParams } from './utils'
+import { getApiUrl, API_URL_BASE, apiUrlAuthParams } from './utils'
 
 describe('getApiUrl', () => {
     const env = process.env
@@ -17,6 +17,6 @@ describe('getApiUrl', () => {
         process.env.REACT_APP_TOKEN_TOKEN = 'token'
         const resource = 'test'
 
-        expect(getApiUrl(resource)).toEqual(`${apiUrlBase}${resource}?${apiUrlAuthParams}`)
+        expect(getApiUrl(resource)).toEqual(`${API_URL_BASE}${resource}?${apiUrlAuthParams}`)
     })
 })

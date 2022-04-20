@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
+export type ListId = Flavor<string, 'listId'>
+
 export const listValidator = z.object({
-    id: z.string(),
+    id: z.string().transform(id => id as ListId),
     name: z.string(),
 })
 
